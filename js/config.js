@@ -6,7 +6,7 @@ export const config = {
   //   'firebase' - Cloud Firestore + Cloud Storage for Firebase (production, NFR-02).
   //   'local'    - JSON files in data/photographers/<slug>.json with media inside this site
   //                (technical spike and offline development, same data contract).
-  dataSource: 'firebase',
+  dataSource: 'local',
 
   // Public Firebase web configuration (NFR-05: no secret keys here, only the public web config).
   // Firebase console > Project settings > General > Your apps > Web app.

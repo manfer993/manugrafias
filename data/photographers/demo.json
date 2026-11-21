@@ -5,7 +5,12 @@
     "version": 1,
     "targetsPath": "data/media/demo/targets.mind",
     "artworks": [
-      { "id": "artwork-1", "targetIndex": 0, "videoPath": "data/media/demo/artwork-1.mp4", "aspectRatio": 1.5 }
+      {
+        "id": "artwork-1",
+        "targetIndex": 0,
+        "videoPath": "data/media/demo/artwork-1.mp4",
+        "aspectRatio": 0.75
+      }
     ]
   }
 }
