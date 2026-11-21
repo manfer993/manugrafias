@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+# Spike media stays local; production media lives in Cloud Storage for Firebase.
+data/media/**/*.mind
+data/media/**/*.mp4
+data/media/**/*.jpg
+data/media/**/*.png

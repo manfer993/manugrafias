@@ -1,0 +1,20 @@
+rules_version = '2';
+
+// MVP 1: the AR experience only reads; all content is loaded by hand in the Firebase console
+// (the console bypasses these rules). MVP 2 replaces `if false` with an administrator check.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Public: one photographer document by its slug. Listing all photographers is not allowed.
+    match /photographers/{slug} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if false;
+    }
+
+    // Panel-only data (titles, upload dates, drafts). Never readable by end users.
+    match /artworks/{artworkId} {
+      allow read, write: if false;
+    }
+  }
+}

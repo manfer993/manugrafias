@@ -1,0 +1,14 @@
+rules_version = '2';
+
+// MVP 1: published media is public read-only; uploads are done by hand in the Firebase console.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /photographers/{slug}/published/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
