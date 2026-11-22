@@ -3,7 +3,10 @@ import { loadPhotographer, readSlug, NotFoundError } from './data.js';
 import { checkEnvironment, hasCameraApi, hasWebGL } from './env.js';
 import { createPlayer, createScene, loadArLibraries, loadScript, preloadTargets } from './ar.js';
 import { PlaybackController } from './playback.js';
-import { TEXT, cameraDeniedSteps, inAppSteps } from './strings.js';
+import { setupLanguage } from './i18n/index.js';
+
+// Texts come from the dictionary of the detected language (default English).
+const { language: LANGUAGE, strings: TEXT } = setupLanguage();
 
 const $ = (id) => document.getElementById(id);
 
@@ -77,7 +80,7 @@ function showInApp(platform) {
     }
     feedback.textContent = TEXT.linkCopied;
   });
-  showMessage({ title: TEXT.inAppTitle, body: inAppSteps(platform), actions: [copy], extra: feedback });
+  showMessage({ title: TEXT.inAppTitle, body: TEXT.inAppSteps[platform] || TEXT.inAppSteps.other, actions: [copy], extra: feedback });
 }
 
 async function showDesktop() {
@@ -159,8 +162,7 @@ async function boot() {
 function renderWelcome(photographer) {
   document.title = `${photographer.name} - ManuGrafias`;
   $('photographer-name').textContent = photographer.name;
-  $('instructions').textContent = TEXT.instructions;
-  $('scan-hint').textContent = TEXT.scanHint;
+  $('privacy-link').href = `privacy.html?lang=${LANGUAGE}`;
   for (const id of ['welcome-website', 'camera-website']) {
     const link = $(id);
     if (photographer.websiteUrl) link.href = photographer.websiteUrl;
@@ -278,7 +280,7 @@ function showCameraDenied() {
   const platform = /iPhone|iPad|iPod|Macintosh/i.test(navigator.userAgent) ? 'ios' : 'android';
   showMessage({
     title: TEXT.cameraDeniedTitle,
-    body: [TEXT.cameraDeniedBody, ...cameraDeniedSteps(platform)],
+    body: [TEXT.cameraDeniedBody, ...TEXT.cameraDeniedSteps[platform]],
     actions: [button(TEXT.tryAgain, reload)],
   });
 }

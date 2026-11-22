@@ -17,7 +17,7 @@ js/playback.js      playback rules (FR-04..FR-09, ERR-06), unit tested
 js/ar.js            A-Frame / MindAR scene and video players
 js/data.js          Firestore REST read + data contract
 js/env.js           in-app browser / desktop / support detection
-js/strings.js       user-facing texts
+js/i18n/            user-facing texts: one dictionary per language (en.js, es.js)
 firebase/           Firestore and Storage rules, Storage CORS
 data/               local data for the technical spike (dataSource: 'local')
 test/               unit tests (npm test)
@@ -92,6 +92,16 @@ To change artworks: upload the new files, compile a new `targets.mind` under `v2
 1. Push this folder as the root of `https://github.com/manfer993/manugrafias` (branch `main`).
 2. Repository > Settings > Pages > Deploy from a branch > `main` / root.
 3. The repository must be **public** on the free GitHub plan.
+
+## Languages
+
+Every user-facing text lives in one dictionary per language in `js/i18n/` (`en.js`, `es.js`).
+English is the default.
+
+- Selection order: `?lang=es` / `?lang=en` in the URL, then the browser language, then English.
+- A key missing in a translation falls back to English.
+- To add a language: copy `js/i18n/en.js` to `js/i18n/<code>.js`, translate it and register it in
+  `DICTIONARIES` in `js/i18n/index.js`. `npm test` fails if its keys differ from English.
 
 ## Tests
 

@@ -72,4 +72,4 @@ photographers/{slug}/published/videos/{artworkId}.mp4
 | Tracking, playback, tolerance, mute, hint, video errors (FR-04 to FR-09, ERR-06) | `js/playback.js` (unit tested) |
 | Background / screen lock (ERR-07) | `visibilitychange` handler in `enableScan()` |
 | Tunable values (NFR-08) | `js/config.js` |
-| Texts | `js/strings.js` |
+| Texts per language (default English) | `js/i18n/en.js`, `js/i18n/es.js`, selection in `js/i18n/index.js` |

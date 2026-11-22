@@ -14,30 +14,31 @@
       .policy p { margin: 0; color: var(--muted); }
       .policy a { color: var(--fg); }
     </style>
+    <script type="module">
+      import { setupLanguage } from './js/i18n/index.js';
+
+      const CONTACT_EMAIL = 'manfer93@gmail.com';
+      const { strings } = setupLanguage();
+      const policy = strings.privacy;
+      const main = document.getElementById('policy');
+      const el = (tag, text) => Object.assign(document.createElement(tag), { textContent: text });
+
+      document.title = policy.pageTitle;
+      main.replaceChildren(el('p', 'ManuGrafias'), el('h1', policy.title), el('p', policy.intro));
+      main.firstChild.className = 'logo';
+      for (const section of policy.sections) main.append(el('h2', section.heading), el('p', section.body));
+
+      const contact = el('p', `${policy.contactBody} `);
+      const link = el('a', CONTACT_EMAIL);
+      link.href = `mailto:${CONTACT_EMAIL}`;
+      contact.append(link, '.');
+      main.append(el('h2', policy.contactHeading), contact);
+    </script>
   </head>
   <body>
-    <main class="policy">
+    <main id="policy" class="policy">
       <p class="logo">ManuGrafias</p>
-      <h1>Privacy Policy - ManuGrafias AR</h1>
-      <p>ManuGrafias AR lets you see videos over printed photographs using your phone's camera.</p>
-
-      <h2>Camera</h2>
-      <p>The camera is used only to recognize the photograph in front of you. The images are processed on your device and are never recorded, stored or sent to any server.</p>
-
-      <h2>Personal data</h2>
-      <p>We do not ask for, collect or store any personal data. You do not need an account.</p>
-
-      <h2>Cookies and tracking</h2>
-      <p>This site does not use cookies, analytics or any tracking tools.</p>
-
-      <h2>Hosting</h2>
-      <p>Our hosting providers (GitHub and Google Firebase) may log technical data such as IP addresses for security purposes. We do not use this data to identify you.</p>
-
-      <h2>External links</h2>
-      <p>The "Visit Website" button opens the photographer's website, which has its own privacy policy.</p>
-
-      <h2>Contact</h2>
-      <p>For any question, contact <a href="mailto:manfer93@gmail.com">manfer93@gmail.com</a>.</p>
+      <noscript><p>JavaScript is required. / Se necesita JavaScript.</p></noscript>
     </main>
   </body>
 </html>

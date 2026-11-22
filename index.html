@@ -18,19 +18,19 @@
     <!-- 4.1 step 2: loading -->
     <main id="screen-loading" class="screen">
       <p class="logo">ManuGrafias</p>
-      <div class="spinner" role="status" aria-label="Loading"></div>
+      <div class="spinner" role="status" aria-label="Loading" data-i18n-aria-label="loadingLabel"></div>
     </main>
 
     <!-- FR-02: welcome screen -->
     <main id="screen-welcome" class="screen" hidden>
       <h1 class="logo">ManuGrafias</h1>
       <p id="photographer-name" class="photographer"></p>
-      <p id="instructions" class="instructions"></p>
+      <p id="instructions" class="instructions" data-i18n="instructions"></p>
       <div class="actions">
-        <button id="btn-scan" type="button" class="btn btn-primary" disabled aria-busy="true">Loading…</button>
-        <a id="welcome-website" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Visit Website</a>
+        <button id="btn-scan" type="button" class="btn btn-primary" disabled aria-busy="true" data-i18n="loading">Loading…</button>
+        <a id="welcome-website" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-i18n="visitWebsite">Visit Website</a>
       </div>
-      <a class="privacy-link" href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
+      <a id="privacy-link" class="privacy-link" href="privacy.html" target="_blank" rel="noopener" data-i18n="privacyPolicy">Privacy Policy</a>
     </main>
 
     <!-- Section 2.4: error and information screens -->
@@ -45,7 +45,7 @@
 
     <!-- 4.1 step 5: camera screen -->
     <div id="camera-ui" hidden>
-      <button id="btn-mute" type="button" class="icon-btn" aria-pressed="false" aria-label="Mute">
+      <button id="btn-mute" type="button" class="icon-btn" aria-pressed="false" aria-label="Mute" data-i18n-aria-label="mute">
         <svg class="icon-on" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z" />
         </svg>
@@ -54,18 +54,18 @@
         </svg>
       </button>
 
-      <p id="scan-hint" class="hint" role="status" hidden></p>
+      <p id="scan-hint" class="hint" role="status" data-i18n="scanHint" hidden></p>
 
       <div id="video-status" class="video-status" role="status" hidden>
         <div class="spinner small" aria-hidden="true"></div>
         <span id="video-status-text"></span>
       </div>
 
-      <a id="camera-website" class="btn btn-secondary camera-website" target="_blank" rel="noopener noreferrer">Visit Website</a>
+      <a id="camera-website" class="btn btn-secondary camera-website" target="_blank" rel="noopener noreferrer" data-i18n="visitWebsite">Visit Website</a>
     </div>
 
     <noscript>
-      <main class="screen"><p class="logo">ManuGrafias</p><p>JavaScript is required.</p></main>
+      <main class="screen"><p class="logo">ManuGrafias</p><p>JavaScript is required. / Se necesita JavaScript.</p></main>
     </noscript>
   </body>
 </html>
