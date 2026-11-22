@@ -43,6 +43,11 @@ body {
   top: 0;
 }
 
+/* A-Frame VR/AR buttons are never used (fallback to xr-mode-ui). */
+.a-enter-vr,
+.a-enter-ar,
+.a-orientation-modal { display: none !important; }
+
 /* ---- Full-screen pages ---- */
 
 .screen {

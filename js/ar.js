@@ -143,6 +143,8 @@ export function createScene({ container, targetsSrc, artworks, mindar }) {
   );
   scene.setAttribute('color-space', 'sRGB');
   scene.setAttribute('renderer', 'colorManagement: true');
+  // No VR/AR "enter" buttons: A-Frame 1.5 uses xr-mode-ui (vr-mode-ui kept for older names).
+  scene.setAttribute('xr-mode-ui', 'enabled: false');
   scene.setAttribute('vr-mode-ui', 'enabled: false');
   scene.setAttribute('device-orientation-permission-ui', 'enabled: false');
   scene.setAttribute('loading-screen', 'enabled: false');
