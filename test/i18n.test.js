@@ -40,7 +40,7 @@ test('missing keys fall back to English', () => {
   try {
     const strings = getStrings('xx');
     assert.equal(strings.scanArtwork, 'XX');
-    assert.equal(strings.visitWebsite, DICTIONARIES.en.visitWebsite);
+    assert.equal(strings.privacyPolicy, DICTIONARIES.en.privacyPolicy);
     assert.equal(strings.privacy.title, 'XX title');
     assert.equal(strings.privacy.intro, DICTIONARIES.en.privacy.intro);
   } finally {
@@ -50,7 +50,10 @@ test('missing keys fall back to English', () => {
 
 test('SRS texts are verbatim in English', () => {
   const en = getStrings('en');
-  assert.equal(en.instructions, 'Turn up the volume, disable silent mode and point your camera at the photograph.');
+  assert.equal(en.tipVolumeTitle, 'Turn up the volume');
+  assert.equal(en.tipVolumeBody, 'Disable silent mode.');
+  assert.equal(en.tipLightTitle, 'Find good light');
+  assert.equal(en.tipAimTitle, 'Point your camera at the artwork');
   assert.equal(en.scanHint, 'Get closer to the photograph and make sure it is well lit.');
   assert.equal(en.videoUnavailable, 'Video unavailable, please try again');
   assert.equal(en.notFoundTitle, 'Artwork collection not found');

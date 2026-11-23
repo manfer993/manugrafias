@@ -7,11 +7,26 @@ export default {
   jsRequired: 'Se necesita JavaScript.',
 
   // FR-02
-  instructions: 'Sube el volumen, desactiva el modo silencio y apunta la cámara a la fotografía.',
+  byPhotographer: 'por',
+  tipsTitle: 'Para una mejor experiencia',
+  tipVolumeTitle: 'Sube el volumen',
+  tipVolumeBody: 'Desactiva el modo silencio.',
+  tipLightTitle: 'Busca buena luz',
+  tipLightBody: 'Asegúrate de estar en un entorno bien iluminado.',
+  tipAimTitle: 'Apunta la cámara a la obra',
+  tipAimBody: 'Y déjate sorprender por la magia.',
   scanArtwork: 'Escanear obra',
   startingCamera: 'Iniciando cámara…',
-  visitWebsite: 'Visitar sitio web',
   privacyPolicy: 'Política de privacidad',
+
+  // FR-07
+  linkInstagram: 'Instagram (se abre en una pestaña nueva)',
+  linkBehance: 'Behance (se abre en una pestaña nueva)',
+  linkPortfolio: 'Portafolio (se abre en una pestaña nueva)',
+  photographerLinks: 'Enlaces del fotógrafo',
+
+  // Pantalla de cámara
+  searching: 'Buscando obra…',
 
   // FR-08
   mute: 'Silenciar',
@@ -93,7 +108,7 @@ export default {
       },
       {
         heading: 'Enlaces externos',
-        body: 'El botón "Visitar sitio web" abre el sitio del fotógrafo, que tiene su propia política de privacidad.',
+        body: 'Los botones de Instagram, Behance y Portafolio abren las páginas del fotógrafo, que tienen sus propias políticas de privacidad.',
       },
     ],
     contactHeading: 'Contacto',

@@ -1,7 +1,7 @@
 # ManuGrafias AR - MVP 1
 
 WebAR experience that plays a video over a printed photograph (MindAR + A-Frame), hosted on GitHub Pages with
-content in Firebase. Requirements: `../SRS_manugrafias.md` v1.3. Architecture and data contract: `docs/architecture.md`.
+content in Firebase. Requirements: `../SRS_manugrafias.md` v1.4. Architecture and data contract: `docs/architecture.md`.
 
 Photographer URL: `https://manfer993.github.io/manugrafias/?p=<photographer-slug>`
 
@@ -17,6 +17,7 @@ js/playback.js      playback rules (FR-04..FR-09, ERR-06), unit tested
 js/ar.js            A-Frame / MindAR scene and video players
 js/data.js          Firestore REST read + data contract
 js/env.js           in-app browser / desktop / support detection
+js/icons.js         inline SVG icons (Font Awesome Free, CC BY 4.0)
 js/i18n/            user-facing texts: one dictionary per language (en.js, es.js)
 firebase/           Firestore and Storage rules, Storage CORS
 data/               local data for the technical spike (dataSource: 'local')
@@ -71,7 +72,10 @@ Remove `dataSource: 'local'` and `allowDesktop: true` before deploying.
 4. Firestore: create the document `photographers/<slug>`:
    ```
    name        (string)  Photographer name
-   websiteUrl  (string)  https://...
+   links       (map)     optional, only the ones the photographer has (each https://...)
+     instagram   (string)
+     behance     (string)
+     portfolio   (string)
    published   (map)
      version      (number) 1
      targetsPath  (string) photographers/<slug>/published/v1/targets.mind

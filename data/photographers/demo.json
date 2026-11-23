@@ -1,6 +1,10 @@
 {
   "name": "Demo Photographer",
-  "websiteUrl": "https://example.com",
+  "links": {
+    "instagram": "https://www.instagram.com/",
+    "behance": "https://www.behance.net/",
+    "portfolio": "https://example.com"
+  },
   "published": {
     "version": 1,
     "targetsPath": "data/media/demo/targets.mind",

@@ -7,11 +7,26 @@ export default {
   jsRequired: 'JavaScript is required.',
 
   // FR-02
-  instructions: 'Turn up the volume, disable silent mode and point your camera at the photograph.',
+  byPhotographer: 'by',
+  tipsTitle: 'For the best experience',
+  tipVolumeTitle: 'Turn up the volume',
+  tipVolumeBody: 'Disable silent mode.',
+  tipLightTitle: 'Find good light',
+  tipLightBody: 'Make sure you are in a well-lit place.',
+  tipAimTitle: 'Point your camera at the artwork',
+  tipAimBody: 'And let the magic surprise you.',
   scanArtwork: 'Scan Artwork',
   startingCamera: 'Starting camera…',
-  visitWebsite: 'Visit Website',
   privacyPolicy: 'Privacy Policy',
+
+  // FR-07: photographer links (icon only, the label is read by screen readers)
+  linkInstagram: 'Instagram (opens in a new tab)',
+  linkBehance: 'Behance (opens in a new tab)',
+  linkPortfolio: 'Portfolio (opens in a new tab)',
+  photographerLinks: 'Photographer links',
+
+  // Camera screen
+  searching: 'Searching for artwork…',
 
   // FR-08
   mute: 'Mute',
@@ -93,7 +108,7 @@ export default {
       },
       {
         heading: 'External links',
-        body: 'The "Visit Website" button opens the photographer\'s website, which has its own privacy policy.',
+        body: 'The Instagram, Behance and Portfolio buttons open the photographer\'s pages, which have their own privacy policies.',
       },
     ],
     contactHeading: 'Contact',

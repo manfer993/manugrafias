@@ -4,15 +4,18 @@ import { checkEnvironment, hasCameraApi, hasWebGL } from './env.js';
 import { createPlayer, createScene, loadArLibraries, loadScript, preloadTargets } from './ar.js';
 import { PlaybackController } from './playback.js';
 import { setupLanguage } from './i18n/index.js';
+import { applyIcons, iconSvg } from './icons.js';
 
 // Texts come from the dictionary of the detected language (default English).
 const { language: LANGUAGE, strings: TEXT } = setupLanguage();
+applyIcons();
 
 const $ = (id) => document.getElementById(id);
 
 const screens = ['screen-loading', 'screen-welcome', 'screen-message', 'camera-ui'];
 function show(id) {
   for (const s of screens) $(s).hidden = s !== id;
+  document.body.classList.toggle('is-camera', id === 'camera-ui');
 }
 
 // ---- Message screens (every error shows the logo and plain language, section 2.4) ----
@@ -45,14 +48,30 @@ function button(label, onClick, variant = 'primary') {
   return el;
 }
 
-function websiteLink(url) {
-  const a = document.createElement('a');
-  a.className = 'btn btn-secondary';
-  a.href = url;
-  a.target = '_blank'; // FR-07: new tab, the AR tab stays open
-  a.rel = 'noopener noreferrer';
-  a.textContent = TEXT.visitWebsite;
-  return a;
+// FR-07: one icon button per photographer link (Instagram, Behance, Portfolio).
+const LINK_LABELS = { instagram: 'linkInstagram', behance: 'linkBehance', portfolio: 'linkPortfolio' };
+
+function renderLinks(container, links) {
+  container.replaceChildren(
+    ...links.map(({ type, url }) => {
+      const a = document.createElement('a');
+      a.className = `link-btn link-${type}`;
+      a.href = url;
+      a.target = '_blank'; // new tab, the AR tab stays open
+      a.rel = 'noopener noreferrer';
+      a.setAttribute('aria-label', TEXT[LINK_LABELS[type]]);
+      a.innerHTML = iconSvg(type);
+      return a;
+    }),
+  );
+  return container;
+}
+
+function linksNav(links) {
+  const nav = document.createElement('nav');
+  nav.className = 'links';
+  nav.setAttribute('aria-label', TEXT.photographerLinks);
+  return renderLinks(nav, links);
 }
 
 const reload = () => location.reload();
@@ -136,7 +155,7 @@ async function boot() {
     return showMessage({
       title: TEXT.noArtworksTitle,
       subtitle: photographer.name,
-      actions: photographer.websiteUrl ? [websiteLink(photographer.websiteUrl)] : [],
+      actions: photographer.links.length ? [linksNav(photographer.links)] : [],
     });
   }
 
@@ -163,11 +182,8 @@ function renderWelcome(photographer) {
   document.title = `${photographer.name} - ManuGrafias`;
   $('photographer-name').textContent = photographer.name;
   $('privacy-link').href = `privacy.html?lang=${LANGUAGE}`;
-  for (const id of ['welcome-website', 'camera-website']) {
-    const link = $(id);
-    if (photographer.websiteUrl) link.href = photographer.websiteUrl;
-    else link.hidden = true;
-  }
+  renderLinks($('welcome-links'), photographer.links);
+  renderLinks($('camera-links'), photographer.links);
   show('screen-welcome');
 }
 
@@ -177,7 +193,8 @@ function enableScan(photographer, ar) {
   const scan = $('btn-scan');
   scan.disabled = false;
   scan.removeAttribute('aria-busy');
-  scan.textContent = TEXT.scanArtwork;
+  const scanLabel = $('btn-scan-label');
+  scanLabel.textContent = TEXT.scanArtwork;
 
   const ui = {
     showHint: () => ($('scan-hint').hidden = false),
@@ -189,6 +206,9 @@ function enableScan(photographer, ar) {
   };
 
   const players = {};
+  // Viewfinder and "Searching for artwork…" are shown only while no photograph is tracked.
+  const tracked = new Set();
+  const updateTracking = () => $('camera-ui').classList.toggle('is-tracking', tracked.size > 0);
   const controller = new PlaybackController({
     players,
     ui,
@@ -220,13 +240,23 @@ function enableScan(photographer, ar) {
         if (!artwork.aspectRatio) ar.setPlaneAspect(i, ratio);
       },
     });
-    ar.anchors.get(i).addEventListener('targetFound', () => controller.found(i));
-    ar.anchors.get(i).addEventListener('targetLost', () => controller.lost(i));
+    ar.anchors.get(i).addEventListener('targetFound', () => {
+      tracked.add(i);
+      updateTracking();
+      controller.found(i);
+    });
+    ar.anchors.get(i).addEventListener('targetLost', () => {
+      tracked.delete(i);
+      updateTracking();
+      controller.lost(i);
+    });
   }
 
   let cameraActive = false;
   ar.scene.addEventListener('arReady', () => {
     cameraActive = true;
+    tracked.clear();
+    updateTracking();
     show('camera-ui');
     controller.start();
   });
@@ -237,7 +267,7 @@ function enableScan(photographer, ar) {
 
   scan.addEventListener('click', () => {
     scan.disabled = true;
-    scan.textContent = TEXT.startingCamera;
+    scanLabel.textContent = TEXT.startingCamera;
     // Inside the tap: start downloading and unlock audio for every video (FR-03, NFR-03).
     for (const artwork of photographer.artworks) {
       const player = players[artwork.targetIndex];

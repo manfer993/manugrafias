@@ -3,14 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#050505" />
     <title>Privacy Policy - ManuGrafias</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" />
     <link rel="stylesheet" href="css/styles.css" />
     <style>
       html, body { overflow: auto; }
-      .policy { max-width: 40rem; margin: 0 auto; padding: calc(24px + var(--safe-top)) 20px calc(40px + var(--safe-bottom)); line-height: 1.6; }
-      .policy h1 { font-size: 1.5rem; margin: 24px 0 8px; }
-      .policy h2 { font-size: 1rem; margin: 20px 0 4px; }
+      .policy { position: relative; z-index: 10; max-width: 40rem; margin: 0 auto; padding: calc(32px + var(--safe-top)) 20px calc(40px + var(--safe-bottom)); line-height: 1.6; }
+      .policy > .logo { text-align: center; font-size: 1.5rem; color: var(--fg); }
+      .policy .card { margin-top: 24px; padding: 24px 20px; }
+      .policy h1 { font-size: 1.5rem; font-weight: 800; color: var(--fg); margin: 0 0 8px; }
+      .policy h2 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin: 24px 0 4px; }
       .policy p { margin: 0; color: var(--muted); }
       .policy a { color: var(--fg); }
     </style>
@@ -24,18 +29,23 @@
       const el = (tag, text) => Object.assign(document.createElement(tag), { textContent: text });
 
       document.title = policy.pageTitle;
-      main.replaceChildren(el('p', 'ManuGrafias'), el('h1', policy.title), el('p', policy.intro));
-      main.firstChild.className = 'logo';
-      for (const section of policy.sections) main.append(el('h2', section.heading), el('p', section.body));
+      const logo = el('p', 'ManuGrafias ');
+      logo.className = 'logo';
+      logo.append(Object.assign(el('span', 'AR'), { className: 'text-gradient' }));
+      const card = Object.assign(document.createElement('article'), { className: 'card' });
+      main.replaceChildren(logo, card);
+      card.append(el('h1', policy.title), el('p', policy.intro));
+      for (const section of policy.sections) card.append(el('h2', section.heading), el('p', section.body));
 
       const contact = el('p', `${policy.contactBody} `);
       const link = el('a', CONTACT_EMAIL);
       link.href = `mailto:${CONTACT_EMAIL}`;
       contact.append(link, '.');
-      main.append(el('h2', policy.contactHeading), contact);
+      card.append(el('h2', policy.contactHeading), contact);
     </script>
   </head>
   <body>
+    <div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
     <main id="policy" class="policy">
       <p class="logo">ManuGrafias</p>
       <noscript><p>JavaScript is required. / Se necesita JavaScript.</p></noscript>

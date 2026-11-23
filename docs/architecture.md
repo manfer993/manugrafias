@@ -1,6 +1,6 @@
 # ManuGrafias AR - Architecture (MVP 1)
 
-Source of requirements: `SRS_manugrafias.md` v1.3.
+Source of requirements: `SRS_manugrafias.md` v1.4.
 
 ## Release plan
 
@@ -34,7 +34,8 @@ Firebase
 | Field | Type | Notes |
 | ----- | ---- | ----- |
 | `name` | string | Shown on the welcome screen |
-| `websiteUrl` | string | Must start with `https://` (otherwise the button is hidden) |
+| `links` | map | Optional. Up to three keys: `instagram`, `behance`, `portfolio` (FR-07) |
+| `links.<type>` | string | Must start with `https://` (otherwise that button is hidden). Shown in the order Instagram, Behance, Portfolio |
 | `published` | map | Absent until the first publication (ERR-10) |
 | `published.version` | number | Incremented on every publication |
 | `published.targetsPath` | string | Storage path of the compiled `targets.mind` |
@@ -73,3 +74,4 @@ photographers/{slug}/published/videos/{artworkId}.mp4
 | Background / screen lock (ERR-07) | `visibilitychange` handler in `enableScan()` |
 | Tunable values (NFR-08) | `js/config.js` |
 | Texts per language (default English) | `js/i18n/en.js`, `js/i18n/es.js`, selection in `js/i18n/index.js` |
+| Visual style (SRS 4.3), icons | `css/styles.css`, `js/icons.js` (inline SVG, no icon font) |

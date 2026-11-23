@@ -3,7 +3,10 @@
 // Contract (shared with the MVP 2 content panel, see docs/architecture.md):
 //   photographers/{slug}
 //     name:        string
-//     websiteUrl:  string (https://)
+//     links:       map, optional, at most 3 entries (each an https:// URL)
+//       instagram:   string
+//       behance:     string
+//       portfolio:   string
 //     published:   map, absent until the first publication
 //       version:     number
 //       targetsPath: string  Storage path of the compiled targets.mind
@@ -67,10 +70,18 @@ export function normalizePhotographer(raw, resolveMediaUrl) {
 
   return {
     name: String(raw.name || ''),
-    websiteUrl: isHttpsUrl(raw.websiteUrl) ? raw.websiteUrl : null,
+    links: normalizeLinks(raw.links),
     targetsUrl: published && published.targetsPath ? resolveMediaUrl(published.targetsPath) : null,
     artworks,
   };
+}
+
+// Photographer links (FR-07): fixed order, only the ones present and valid are shown.
+export const LINK_TYPES = ['instagram', 'behance', 'portfolio'];
+
+export function normalizeLinks(links) {
+  if (!links || typeof links !== 'object') return [];
+  return LINK_TYPES.filter((type) => isHttpsUrl(links[type])).map((type) => ({ type, url: links[type] }));
 }
 
 export function isHttpsUrl(value) {

@@ -1,4 +1,6 @@
 {
   "name": "Photographer Without Artworks",
-  "websiteUrl": "https://example.com"
+  "links": {
+    "instagram": "https://www.instagram.com/"
+  }
 }
