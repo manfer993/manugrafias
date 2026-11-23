@@ -7,7 +7,6 @@ export default {
   jsRequired: 'JavaScript is required.',
 
   // FR-02
-  byPhotographer: 'by',
   tipsTitle: 'For the best experience',
   tipVolumeTitle: 'Turn up the volume',
   tipVolumeBody: 'Disable silent mode.',
