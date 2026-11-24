@@ -34,7 +34,6 @@ body {
   overflow: hidden;
 }
 
-.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 /* ---- Icons (inline SVG, js/icons.js) ---- */
 
@@ -117,10 +116,7 @@ body.is-camera .ambient { display: none; }
   margin: 0 auto 16px;
   display: grid;
   place-items: center;
-  border-radius: 20px;
-  background: #111827;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 2.25rem;
+  border-radius: 18px;
 }
 .brand-mark::before {
   content: '';
@@ -133,8 +129,8 @@ body.is-camera .ambient { display: none; }
   opacity: 0.6;
   animation: glow 3s ease-in-out infinite;
 }
-.brand-mark .icon { fill: url(#grad-brand); }
-.brand-mark.small { width: 56px; height: 56px; border-radius: 16px; font-size: 1.5rem; margin-bottom: 4px; }
+.brand-mark img { display: block; width: 100%; height: 100%; border-radius: inherit; }
+.brand-mark.small { width: 56px; height: 56px; border-radius: 13px; margin-bottom: 4px; }
 
 @keyframes glow {
   50% { opacity: 0.95; }
