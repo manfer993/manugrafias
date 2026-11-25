@@ -1,20 +1,29 @@
 rules_version = '2';
 
-// MVP 1: the AR experience only reads; all content is loaded by hand in the Firebase console
-// (the console bypasses these rules). MVP 2 replaces `if false` with an administrator check.
+// The AR experience only reads one photographer document. The content panel (repository manugrafias_admin)
+// writes as the administrator: a Google sign-in of project manugrafias-2026 with the custom claim admin: true.
+// New sign-ups are disabled in Firebase Authentication, so no other account can exist.
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Public: one photographer document by its slug. Listing all photographers is not allowed.
-    match /photographers/{slug} {
-      allow get: if true;
-      allow list: if false;
-      allow write: if false;
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.admin == true
+        && request.auth.token.firebase.sign_in_provider == 'google.com';
     }
 
-    // Panel-only data (titles, upload dates, drafts). Never readable by end users.
+    // Public: one photographer document by its slug. Only the administrator can list and write.
+    // Photographers can be created and edited, never deleted (SRS 1.2).
+    match /photographers/{slug} {
+      allow get: if true;
+      allow list: if isAdmin();
+      allow create, update: if isAdmin();
+      allow delete: if false;
+    }
+
+    // Panel-only data (titles, upload dates, source files). Never readable by end users.
     match /artworks/{artworkId} {
-      allow read, write: if false;
+      allow read, write: if isAdmin();
     }
   }
 }

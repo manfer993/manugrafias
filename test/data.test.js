@@ -75,3 +75,9 @@ test('media paths resolve against mediaBaseUrl, or Cloud Storage when it is empt
     storageUrl('b', path),
   );
 });
+
+test('absolute https media URLs (content panel, Supabase Storage) are used as is', () => {
+  const url = 'https://abc.supabase.co/storage/v1/object/public/media/photographers/ana/artworks/a/video-1.mp4';
+  assert.equal(mediaResolver({ mediaBaseUrl: 'media/' }, 'https://manfer993.github.io/manugrafias/')(url), url);
+  assert.equal(mediaResolver({ mediaBaseUrl: '', firebase: { storageBucket: 'b' } }, 'https://x.io/')(url), url);
+});

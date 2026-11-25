@@ -7,7 +7,7 @@ Source of requirements: `SRS_manugrafias.md` v1.4.
 | Release | Scope | Content loading |
 | ------- | ----- | --------------- |
 | **MVP 1** (this code) | AR experience: FR-01 to FR-09, ERR-01 to ERR-10, NFR-01 to NFR-09 | By hand in the Firebase console |
-| **MVP 2** | Content panel: FR-10 to FR-14, ERR-11 to ERR-13 | Panel writes the same contract |
+| **MVP 2** | Content panel: FR-10 to FR-14, ERR-11 to ERR-13 (repository `manugrafias_admin`) | Panel writes the same contract |
 
 The AR experience never changes between MVP 1 and MVP 2: both read the contract below.
 
@@ -24,7 +24,10 @@ Phone browser (GitHub Pages, static)
         v
 Firebase (no-cost Spark plan)
   Cloud Firestore     photographers/{slug}
-  Authentication      (MVP 2, administrator only)
+  Authentication      (MVP 2, administrator only, Google sign-in)
+
+Supabase (no-cost plan, MVP 2 only)
+  Storage bucket `media`   panel uploads; same paths as media/
 ```
 
 ## Data contract
@@ -38,11 +41,11 @@ Firebase (no-cost Spark plan)
 | `links.<type>` | string | Must start with `https://` (otherwise that button is hidden). Shown in the order Instagram, Behance, Portfolio |
 | `published` | map | Absent until the first publication (ERR-10) |
 | `published.version` | number | Incremented on every publication |
-| `published.targetsPath` | string | Media path of the compiled `targets.mind` (relative to `mediaBaseUrl`) |
+| `published.targetsPath` | string | Compiled `targets.mind`: absolute `https://` URL (panel, Supabase) or path relative to `mediaBaseUrl` (loaded by hand) |
 | `published.artworks` | array of map | Only what the AR experience needs |
 | `published.artworks[].id` | string | Artwork id (same as `artworks/{id}` in MVP 2) |
 | `published.artworks[].targetIndex` | number | Position of the image inside `targets.mind` (0-based) |
-| `published.artworks[].videoPath` | string | Media path of the video (relative to `mediaBaseUrl`) |
+| `published.artworks[].videoPath` | string | Video: absolute `https://` URL or path relative to `mediaBaseUrl`, as `targetsPath` |
 | `published.artworks[].aspectRatio` | number | Target image width / height (plane size, FR-04) |
 
 Titles, upload dates and authors are **not** in this document: they are panel-only data (MVP 2 collection
@@ -60,8 +63,41 @@ Storage for Firebase needs the Blaze plan, and the project must stay at no cost 
 app, so no CORS. The paths are the same as a Cloud Storage layout: moving later only changes `mediaBaseUrl`
 (empty = Cloud Storage) and `storageBucket` in `js/config.js`.
 
-MVP 2 open point: a browser panel cannot upload to GitHub Pages safely. Candidate at no cost: Supabase Storage
-with Firebase Auth as third-party auth provider (to be verified when the panel starts).
+### MVP 2 media: Supabase Storage (written by the content panel)
+
+A browser panel cannot upload to GitHub Pages safely, so the panel will upload to Supabase Storage (free plan),
+with the administrator signed in through Firebase Auth (Google provider) used as Supabase third-party auth.
+
+| Item | Value |
+| ---- | ----- |
+| Supabase project | `hdajccuxsqteijcodyxg` (`https://hdajccuxsqteijcodyxg.supabase.co`), region East US |
+| Bucket | `media`, public read, 50 MB per file, `video/mp4` and `application/octet-stream` only |
+| Same paths | `photographers/{slug}/published/...` (Media files section) |
+| Public URL | `https://hdajccuxsqteijcodyxg.supabase.co/storage/v1/object/public/media/<path>` |
+| Write access | `supabase/storage.sql`: only Firebase ID tokens of project `manugrafias-2026` (`iss` + `aud`) with the custom claim `admin: true` can insert, update, delete or list |
+| Administrator | Firebase user with custom claims `{ role: 'authenticated', admin: true }` (`scripts/set-admin-claim.mjs`); `role` makes Supabase use the `authenticated` Postgres role |
+| Third-party auth | Supabase > Authentication > Third-Party Auth > Firebase, project `manugrafias-2026` |
+
+Verified on 2026-11-25 (admin upload test from a local page with the Firebase JS SDK and supabase-js):
+admin upload OK, anonymous upload rejected (403), anonymous list returns nothing, HTTP Range requests return 206,
+public objects send `Access-Control-Allow-Origin: *`, and a video loaded with `crossOrigin = 'anonymous'` can be
+read back from a canvas (usable as a WebGL texture).
+
+The panel stores absolute public URLs in `published`, so a photographer published from the panel is served from
+Supabase while photographers loaded by hand keep their relative paths on GitHub Pages (`media/`).
+
+Risk: free Supabase projects are paused after 7 days of low database activity, and the docs do not say whether
+public Storage downloads count as activity or keep working while paused. Mitigation: the workflow
+`manugrafias_admin/.github/workflows/supabase-keep-alive.yml` runs a database query twice a week.
+
+### Firestore rules (`firebase/firestore.rules`)
+
+| Path | Public | Administrator (Google sign-in + custom claim `admin: true`) |
+| ---- | ------ | ----------------------------------------------------------- |
+| `photographers/{slug}` | get | list, create, update (never delete, SRS 1.2) |
+| `artworks/{id}` | none | read, write |
+
+Firebase Authentication has new sign-ups disabled, so the administrator is the only account.
 
 ### Why one document
 

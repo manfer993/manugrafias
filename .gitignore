@@ -5,3 +5,7 @@ data/media/**/*.mind
 data/media/**/*.mp4
 data/media/**/*.jpg
 data/media/**/*.png
+
+# Firebase Admin service account keys: never commit.
+*service-account*.json
+firebase-admin*.json

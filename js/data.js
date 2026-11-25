@@ -98,14 +98,17 @@ export function storageUrl(bucket, path) {
   return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(path)}?alt=media`;
 }
 
-// Media URLs for Firestore mode: from `mediaBaseUrl` when set (e.g. the site itself on GitHub Pages),
-// otherwise from Cloud Storage for Firebase. Paths in Firestore stay the same in both cases.
+// Media URLs for Firestore mode. An absolute https:// URL is used as is (files uploaded by the content panel
+// to Supabase Storage). A relative path resolves against `mediaBaseUrl` when set (e.g. the site itself on
+// GitHub Pages), otherwise against Cloud Storage for Firebase.
 export function mediaResolver({ mediaBaseUrl, firebase }, baseURI) {
-  if (mediaBaseUrl) {
-    const base = new URL(mediaBaseUrl.endsWith('/') ? mediaBaseUrl : `${mediaBaseUrl}/`, baseURI);
-    return (path) => new URL(String(path).replace(/^\/+/, ''), base).href;
-  }
-  return (path) => storageUrl(firebase.storageBucket, path);
+  const resolveRelative = mediaBaseUrl
+    ? (() => {
+        const base = new URL(mediaBaseUrl.endsWith('/') ? mediaBaseUrl : `${mediaBaseUrl}/`, baseURI);
+        return (path) => new URL(String(path).replace(/^\/+/, ''), base).href;
+      })()
+    : (path) => storageUrl(firebase.storageBucket, path);
+  return (path) => (isHttpsUrl(path) ? path : resolveRelative(path));
 }
 
 async function fetchFromFirestore(slug, config) {

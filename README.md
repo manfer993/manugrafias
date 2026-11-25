@@ -5,6 +5,10 @@ photographer data in Cloud Firestore (Firebase no-cost Spark plan) and media fil
 
 Photographer URL: `https://manfer993.github.io/manugrafias/?p=<photographer-slug>`
 
+Content panel (MVP 2): repository [manugrafias_admin](https://github.com/manfer993/manugrafias_admin), published at
+`https://manfer993.github.io/manugrafias_admin/`. Photographers published from the panel have their media in
+Supabase Storage; section 3 below is the manual way (media on GitHub Pages).
+
 ## Structure
 
 ```
