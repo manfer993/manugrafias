@@ -12,13 +12,11 @@ service cloud.firestore {
         && request.auth.token.firebase.sign_in_provider == 'google.com';
     }
 
-    // Public: one photographer document by its slug. Only the administrator can list and write.
-    // Photographers can be created and edited, never deleted (SRS 1.2).
+    // Public: one photographer document by its slug. Only the administrator can list and write
+    // (including deleting a photographer from the panel).
     match /photographers/{slug} {
       allow get: if true;
-      allow list: if isAdmin();
-      allow create, update: if isAdmin();
-      allow delete: if false;
+      allow list, create, update, delete: if isAdmin();
     }
 
     // Panel-only data (titles, upload dates, source files). Never readable by end users.

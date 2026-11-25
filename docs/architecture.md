@@ -94,7 +94,7 @@ public Storage downloads count as activity or keep working while paused. Mitigat
 
 | Path | Public | Administrator (Google sign-in + custom claim `admin: true`) |
 | ---- | ------ | ----------------------------------------------------------- |
-| `photographers/{slug}` | get | list, create, update (never delete, SRS 1.2) |
+| `photographers/{slug}` | get | list, create, update, delete (the panel deletes a photographer with its artworks) |
 | `artworks/{id}` | none | read, write |
 
 Firebase Authentication has new sign-ups disabled, so the administrator is the only account.
