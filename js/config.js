@@ -2,12 +2,7 @@
 // Every tunable value of the AR experience lives here; no code changes are needed to adjust them.
 
 export const config = {
-  // Where the photographer data comes from:
-  //   'firebase' - Cloud Firestore + Cloud Storage for Firebase (production, NFR-02).
-  //   'local'    - JSON files in data/photographers/<slug>.json with media inside this site
-  //                (technical spike and offline development, same data contract).
-  dataSource: 'firebase',
-
+  // Photographer data: Cloud Firestore, document photographers/<slug> (written by the content panel).
   // Public Firebase web configuration (NFR-05: no secret keys here, only the public web config).
   // Firebase console > Project settings > General > Your apps > Web app.
   firebase: {
@@ -16,13 +11,9 @@ export const config = {
     storageBucket: 'manugrafias-2026.firebasestorage.app', // only used when mediaBaseUrl is ''
   },
 
-  // Where targets.mind and the videos are served from when dataSource is 'firebase'.
-  //   'media/' - this site (GitHub Pages): files in the repository under media/<Firestore path>.
-  //   ''       - Cloud Storage for Firebase (needs the Blaze plan).
-  mediaBaseUrl: 'media/',
-
-  // Folder (relative to the site root) used when dataSource is 'local'.
-  localDataPath: 'data/photographers',
+  // Base for media paths that are not absolute URLs. The content panel stores absolute Supabase Storage URLs,
+  // so this only applies to relative paths: '' = Cloud Storage for Firebase (needs the Blaze plan).
+  mediaBaseUrl: 'https://hdajccuxsqteijcodyxg.supabase.co/storage/v1/object/public/media/',
 
   // FR-06: time tracking can be lost before the video is hidden, paused and reset to 0:00.
   trackingLossToleranceMs: 400,

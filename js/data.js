@@ -9,11 +9,11 @@
 //       portfolio:   string
 //     published:   map, absent until the first publication
 //       version:     number
-//       targetsPath: string  Storage path of the compiled targets.mind
+//       targetsPath: string  URL of the compiled targets.mind
 //       artworks:    array of map
 //         id:          string
 //         targetIndex: number  position of the artwork inside targets.mind
-//         videoPath:   string  Storage path of the video
+//         videoPath:   string  URL of the video
 //         aspectRatio: number  width / height of the target image
 //
 // The AR experience reads ONE document per visit, so a publication is atomic:
@@ -98,9 +98,8 @@ export function storageUrl(bucket, path) {
   return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(path)}?alt=media`;
 }
 
-// Media URLs for Firestore mode. An absolute https:// URL is used as is (files uploaded by the content panel
-// to Supabase Storage). A relative path resolves against `mediaBaseUrl` when set (e.g. the site itself on
-// GitHub Pages), otherwise against Cloud Storage for Firebase.
+// Media URLs. An absolute https:// URL is used as is (files uploaded by the content panel to Supabase
+// Storage). A relative path resolves against `mediaBaseUrl` when set, otherwise against Cloud Storage.
 export function mediaResolver({ mediaBaseUrl, firebase }, baseURI) {
   const resolveRelative = mediaBaseUrl
     ? (() => {
@@ -111,7 +110,7 @@ export function mediaResolver({ mediaBaseUrl, firebase }, baseURI) {
   return (path) => (isHttpsUrl(path) ? path : resolveRelative(path));
 }
 
-async function fetchFromFirestore(slug, config) {
+export async function loadPhotographer(slug, config) {
   const { firebase } = config;
   const url =
     `https://firestore.googleapis.com/v1/projects/${firebase.projectId}` +
@@ -121,18 +120,4 @@ async function fetchFromFirestore(slug, config) {
   if (!response.ok) throw new Error(`Firestore ${response.status}`);
   const doc = await response.json();
   return normalizePhotographer(decodeFields(doc.fields || {}), mediaResolver(config, document.baseURI));
-}
-
-async function fetchFromLocal(slug, localDataPath) {
-  const response = await fetch(`${localDataPath}/${slug}.json`, { cache: 'no-cache' });
-  if (response.status === 404) throw new NotFoundError(slug);
-  if (!response.ok) throw new Error(`Local data ${response.status}`);
-  const raw = await response.json();
-  return normalizePhotographer(raw, (path) => new URL(path, document.baseURI).href);
-}
-
-export function loadPhotographer(slug, config) {
-  return config.dataSource === 'local'
-    ? fetchFromLocal(slug, config.localDataPath)
-    : fetchFromFirestore(slug, config);
 }
