@@ -98,7 +98,18 @@ export function storageUrl(bucket, path) {
   return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(path)}?alt=media`;
 }
 
-async function fetchFromFirestore(slug, firebase) {
+// Media URLs for Firestore mode: from `mediaBaseUrl` when set (e.g. the site itself on GitHub Pages),
+// otherwise from Cloud Storage for Firebase. Paths in Firestore stay the same in both cases.
+export function mediaResolver({ mediaBaseUrl, firebase }, baseURI) {
+  if (mediaBaseUrl) {
+    const base = new URL(mediaBaseUrl.endsWith('/') ? mediaBaseUrl : `${mediaBaseUrl}/`, baseURI);
+    return (path) => new URL(String(path).replace(/^\/+/, ''), base).href;
+  }
+  return (path) => storageUrl(firebase.storageBucket, path);
+}
+
+async function fetchFromFirestore(slug, config) {
+  const { firebase } = config;
   const url =
     `https://firestore.googleapis.com/v1/projects/${firebase.projectId}` +
     `/databases/(default)/documents/photographers/${encodeURIComponent(slug)}?key=${firebase.apiKey}`;
@@ -106,9 +117,7 @@ async function fetchFromFirestore(slug, firebase) {
   if (response.status === 404) throw new NotFoundError(slug);
   if (!response.ok) throw new Error(`Firestore ${response.status}`);
   const doc = await response.json();
-  return normalizePhotographer(decodeFields(doc.fields || {}), (path) =>
-    storageUrl(firebase.storageBucket, path),
-  );
+  return normalizePhotographer(decodeFields(doc.fields || {}), mediaResolver(config, document.baseURI));
 }
 
 async function fetchFromLocal(slug, localDataPath) {
@@ -122,5 +131,5 @@ async function fetchFromLocal(slug, localDataPath) {
 export function loadPhotographer(slug, config) {
   return config.dataSource === 'local'
     ? fetchFromLocal(slug, config.localDataPath)
-    : fetchFromFirestore(slug, config.firebase);
+    : fetchFromFirestore(slug, config);
 }

@@ -18,12 +18,12 @@ Phone browser (GitHub Pages, static)
   index.html + js/*.js (ES modules, no build step)
   A-Frame 1.5.0 + MindAR 1.2.5 (CDN, pinned)
         |
+  media/photographers/{slug}/published/...   (targets.mind + videos, same origin)
+        |
         | 1 read: GET photographers/{slug}       (Firestore REST, public get)
-        | media:  GET targets.mind + videos       (Cloud Storage, public read, CORS)
         v
-Firebase
+Firebase (no-cost Spark plan)
   Cloud Firestore     photographers/{slug}
-  Cloud Storage       photographers/{slug}/published/...
   Authentication      (MVP 2, administrator only)
 ```
 
@@ -38,22 +38,30 @@ Firebase
 | `links.<type>` | string | Must start with `https://` (otherwise that button is hidden). Shown in the order Instagram, Behance, Portfolio |
 | `published` | map | Absent until the first publication (ERR-10) |
 | `published.version` | number | Incremented on every publication |
-| `published.targetsPath` | string | Storage path of the compiled `targets.mind` |
+| `published.targetsPath` | string | Media path of the compiled `targets.mind` (relative to `mediaBaseUrl`) |
 | `published.artworks` | array of map | Only what the AR experience needs |
 | `published.artworks[].id` | string | Artwork id (same as `artworks/{id}` in MVP 2) |
 | `published.artworks[].targetIndex` | number | Position of the image inside `targets.mind` (0-based) |
-| `published.artworks[].videoPath` | string | Storage path of the video |
+| `published.artworks[].videoPath` | string | Media path of the video (relative to `mediaBaseUrl`) |
 | `published.artworks[].aspectRatio` | number | Target image width / height (plane size, FR-04) |
 
 Titles, upload dates and authors are **not** in this document: they are panel-only data (MVP 2 collection
 `artworks/{id}`, not readable by end users), so they can never leak into the AR experience (section 1.5).
 
-### Cloud Storage
+### Media files
 
 ```
 photographers/{slug}/published/v{version}/targets.mind
 photographers/{slug}/published/videos/{artworkId}.mp4
 ```
+
+MVP 1 serves them from GitHub Pages (`mediaBaseUrl: 'media/'`, folder `media/` of the repository): Cloud
+Storage for Firebase needs the Blaze plan, and the project must stay at no cost for now. Same origin as the
+app, so no CORS. The paths are the same as a Cloud Storage layout: moving later only changes `mediaBaseUrl`
+(empty = Cloud Storage) and `storageBucket` in `js/config.js`.
+
+MVP 2 open point: a browser panel cannot upload to GitHub Pages safely. Candidate at no cost: Supabase Storage
+with Firebase Auth as third-party auth provider (to be verified when the panel starts).
 
 ### Why one document
 

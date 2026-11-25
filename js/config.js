@@ -6,15 +6,20 @@ export const config = {
   //   'firebase' - Cloud Firestore + Cloud Storage for Firebase (production, NFR-02).
   //   'local'    - JSON files in data/photographers/<slug>.json with media inside this site
   //                (technical spike and offline development, same data contract).
-  dataSource: 'local',
+  dataSource: 'firebase',
 
   // Public Firebase web configuration (NFR-05: no secret keys here, only the public web config).
   // Firebase console > Project settings > General > Your apps > Web app.
   firebase: {
-    apiKey: '<FIREBASE_API_KEY>',
-    projectId: '<FIREBASE_PROJECT_ID>',
-    storageBucket: '<FIREBASE_STORAGE_BUCKET>', // e.g. manugrafias.firebasestorage.app
+    apiKey: 'AIzaSyB8tY6_12ZzPDWZc-i7FNlgOjSnYA21Y5E',
+    projectId: 'manugrafias-2026',
+    storageBucket: 'manugrafias-2026.firebasestorage.app', // only used when mediaBaseUrl is ''
   },
+
+  // Where targets.mind and the videos are served from when dataSource is 'firebase'.
+  //   'media/' - this site (GitHub Pages): files in the repository under media/<Firestore path>.
+  //   ''       - Cloud Storage for Firebase (needs the Blaze plan).
+  mediaBaseUrl: 'media/',
 
   // Folder (relative to the site root) used when dataSource is 'local'.
   localDataPath: 'data/photographers',

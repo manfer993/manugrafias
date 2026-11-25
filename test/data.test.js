@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { decodeFields, normalizePhotographer, readSlug, storageUrl } from '../js/data.js';
+import { decodeFields, mediaResolver, normalizePhotographer, readSlug, storageUrl } from '../js/data.js';
 
 test('decodes a Firestore REST document with the photographer contract', () => {
   const fields = {
@@ -57,4 +57,21 @@ test('FR-01: slug comes from ?p= and invalid slugs are rejected', () => {
   assert.equal(readSlug('?p=Ana-Lopez'), 'ana-lopez');
   assert.equal(readSlug('?p=../x'), null);
   assert.equal(readSlug(''), null);
+});
+
+test('media paths resolve against mediaBaseUrl, or Cloud Storage when it is empty', () => {
+  const site = 'https://manfer993.github.io/manugrafias/?p=ana';
+  const path = 'photographers/ana/published/videos/a.mp4';
+  assert.equal(
+    mediaResolver({ mediaBaseUrl: 'media/' }, site)(path),
+    'https://manfer993.github.io/manugrafias/media/photographers/ana/published/videos/a.mp4',
+  );
+  assert.equal(
+    mediaResolver({ mediaBaseUrl: 'media' }, site)('/' + path),
+    'https://manfer993.github.io/manugrafias/media/photographers/ana/published/videos/a.mp4',
+  );
+  assert.equal(
+    mediaResolver({ mediaBaseUrl: '', firebase: { storageBucket: 'b' } }, site)(path),
+    storageUrl('b', path),
+  );
 });

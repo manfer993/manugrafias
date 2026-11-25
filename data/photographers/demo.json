@@ -7,18 +7,18 @@
   },
   "published": {
     "version": 1,
-    "targetsPath": "data/media/demo/targets.mind",
+    "targetsPath": "media/photographers/manuel-munoz/published/v1/targets.mind",
     "artworks": [
       {
         "id": "artwork-1",
         "targetIndex": 0,
-        "videoPath": "data/media/demo/artwork-1.mp4",
+        "videoPath": "media/photographers/manuel-munoz/published/videos/artwork-1.mp4",
         "aspectRatio": 0.75
       },
       {
         "id": "artwork-2",
         "targetIndex": 1,
-        "videoPath": "data/media/demo/artwork-2.mp4",
+        "videoPath": "media/photographers/manuel-munoz/published/videos/artwork-2.mp4",
         "aspectRatio": 0.75
       }
     ]

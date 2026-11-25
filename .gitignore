@@ -1,6 +1,6 @@
 .DS_Store
 node_modules/
-# Spike media stays local; production media lives in Cloud Storage for Firebase.
+# Spike media stays local; published media is committed under media/ (served by GitHub Pages).
 data/media/**/*.mind
 data/media/**/*.mp4
 data/media/**/*.jpg
