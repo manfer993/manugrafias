@@ -253,7 +253,35 @@ function enableScan(photographer, ar) {
   }
 
   let cameraActive = false;
+  // The camera screen has its own history entry, so the browser's Back button returns to the welcome screen
+  // instead of leaving the app. `wantCamera` is false once Back is pressed (even while the camera is starting).
+  let wantCamera = false;
+
+  let denied = false;
+  const stopCamera = () => {
+    cameraActive = false;
+    denied = false;
+    controller.suspend();
+    try {
+      ar.system.stop();
+    } catch {
+      // the camera never started (permission denied)
+    }
+    tracked.clear();
+    updateTracking();
+    show('screen-welcome');
+    scan.disabled = false;
+    scanLabel.textContent = TEXT.scanArtwork;
+  };
+
+  window.addEventListener('popstate', () => {
+    if (!wantCamera) return;
+    wantCamera = false;
+    if (cameraActive || denied) stopCamera();
+  });
+
   ar.scene.addEventListener('arReady', () => {
+    if (!wantCamera) return stopCamera(); // Back was pressed while the camera was starting
     cameraActive = true;
     tracked.clear();
     updateTracking();
@@ -262,12 +290,15 @@ function enableScan(photographer, ar) {
   });
   ar.scene.addEventListener('arError', () => {
     cameraActive = false;
+    denied = wantCamera; // Back from the ERR-01 screen also returns to the welcome screen
     showCameraDenied();
   });
 
   scan.addEventListener('click', () => {
     scan.disabled = true;
     scanLabel.textContent = TEXT.startingCamera;
+    wantCamera = true;
+    if (!history.state?.camera) history.pushState({ camera: true }, '');
     // Inside the tap: start downloading and unlock audio for every video (FR-03, NFR-03).
     for (const artwork of photographer.artworks) {
       const player = players[artwork.targetIndex];
