@@ -103,7 +103,7 @@ export default {
       },
       {
         heading: 'Hosting',
-        body: 'Our hosting providers (GitHub and Google Firebase) may log technical data such as IP addresses for security purposes. We do not use this data to identify you.',
+        body: 'Our service providers (GitHub, Google Firebase and Supabase, which host the site, the data and the videos, and Google Fonts, which serves the fonts) may log technical data such as IP addresses for security purposes. We do not use this data to identify you.',
       },
       {
         heading: 'External links',

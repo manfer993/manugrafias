@@ -103,7 +103,7 @@ export default {
       },
       {
         heading: 'Alojamiento',
-        body: 'Nuestros proveedores de alojamiento (GitHub y Google Firebase) pueden registrar datos técnicos, como direcciones IP, por motivos de seguridad. No usamos estos datos para identificarte.',
+        body: 'Nuestros proveedores de servicios (GitHub, Google Firebase y Supabase, que alojan el sitio, los datos y los videos, y Google Fonts, que sirve las fuentes) pueden registrar datos técnicos, como direcciones IP, por motivos de seguridad. No usamos estos datos para identificarte.',
       },
       {
         heading: 'Enlaces externos',

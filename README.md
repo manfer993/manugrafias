@@ -1,7 +1,7 @@
 # ManuGrafias AR - MVP 1
 
 WebAR experience that plays a video over a printed photograph (MindAR + A-Frame), hosted on GitHub Pages with
-photographer data in Cloud Firestore (Firebase no-cost Spark plan) and media files in Supabase Storage. Requirements: `../SRS_manugrafias.md` v1.4. Architecture and data contract: `docs/architecture.md`.
+photographer data in Cloud Firestore (Firebase no-cost Spark plan) and media files in Supabase Storage. Requirements: `../SRS_manugrafias.md` v1.5. Architecture and data contract: `docs/architecture.md`.
 
 Photographer URL: `https://manfer993.github.io/manugrafias/?p=<photographer-slug>`
 
