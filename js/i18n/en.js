@@ -25,6 +25,7 @@ export default {
   linkPortfolio: 'Portfolio (opens in a new tab)',
   photographerLinks: 'Photographer links',
   connectTitle: 'Connect with me',
+  meanwhileTitle: 'Meanwhile, discover their work',
 
   // Camera screen
   searching: 'Searching for artwork…',
@@ -81,7 +82,7 @@ export default {
 
   // ERR-10
   noArtworksTitle: 'No artworks available yet',
-  noArtworksBody: 'Their artworks will be available here soon. Check back later!',
+  noArtworksBody: "{name}'s artworks are coming soon.",
 
   // Data or library loading failure (no blank screens, section 2.4)
   loadFailedTitle: 'Something went wrong',

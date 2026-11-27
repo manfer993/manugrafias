@@ -25,6 +25,7 @@ export default {
   linkPortfolio: 'Portafolio (se abre en una pestaña nueva)',
   photographerLinks: 'Enlaces del fotógrafo',
   connectTitle: 'Conecta conmigo',
+  meanwhileTitle: 'Mientras tanto, conoce su trabajo',
 
   // Pantalla de cámara
   searching: 'Buscando obra…',
@@ -81,7 +82,7 @@ export default {
 
   // ERR-10
   noArtworksTitle: 'Aún no hay obras disponibles',
-  noArtworksBody: 'Sus obras se cargarán pronto. ¡Vuelve más tarde!',
+  noArtworksBody: 'Las obras de {name} llegarán pronto.',
 
   // Error de carga de datos o librerías
   loadFailedTitle: 'Algo salió mal',

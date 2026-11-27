@@ -152,11 +152,21 @@ async function boot() {
 
   if (!photographer.targetsUrl || photographer.artworks.length === 0) {
     // ERR-10: no camera request.
+    let actions = [];
+    if (photographer.links.length) {
+      const section = document.createElement('section');
+      section.className = 'connect';
+      const heading = document.createElement('h2');
+      heading.className = 'connect-title';
+      heading.textContent = TEXT.meanwhileTitle;
+      section.append(heading, linksNav(photographer.links));
+      actions = [section];
+    }
     return showMessage({
       title: TEXT.noArtworksTitle,
       subtitle: photographer.name,
-      body: TEXT.noArtworksBody,
-      actions: photographer.links.length ? [linksNav(photographer.links)] : [],
+      body: TEXT.noArtworksBody.replace('{name}', photographer.name),
+      actions,
     });
   }
 
