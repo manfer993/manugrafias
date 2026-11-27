@@ -199,13 +199,17 @@ function enableScan(photographer, ar) {
 
   // One help text in the middle of the frame; after a while without a photograph it changes to the FR-09 hint.
   const centerHelp = $('center-help');
+  const muteButton = $('btn-mute');
   const ui = {
     showHint: () => (centerHelp.textContent = TEXT.scanHint),
     hideHint: () => (centerHelp.textContent = TEXT.centerHelp),
     showLoading: () => setStatus('loading'),
     showUnavailable: () => setStatus('unavailable'),
     hideStatus: () => setStatus(null),
-    setPlaneVisible: (i, v) => ar.setPlaneVisible(i, v),
+    setPlaneVisible: (i, v) => {
+      ar.setPlaneVisible(i, v);
+      muteButton.hidden = !v; // the sound button exists only while a video is showing
+    },
   };
 
   const players = {};
@@ -221,6 +225,13 @@ function enableScan(photographer, ar) {
     indicatorDelayMs: config.videoLoadingIndicatorDelayMs,
   });
 
+  const setMuted = (muted) => {
+    controller.setMuted(muted);
+    muteButton.setAttribute('aria-pressed', String(muted));
+    muteButton.setAttribute('aria-label', muted ? TEXT.unmute : TEXT.mute);
+    muteButton.classList.toggle('is-muted', muted);
+  };
+  muteButton.addEventListener('click', () => setMuted(!controller.muted));
 
   for (const artwork of photographer.artworks) {
     const i = artwork.targetIndex;
@@ -230,7 +241,7 @@ function enableScan(photographer, ar) {
       host: $('video-host'),
       onPlaying: () => controller.playing(i),
       onError: () => controller.failed(i),
-      onForcedMute: () => controller.setMuted(true), // the browser refused audio: keep playing muted
+      onForcedMute: () => setMuted(true), // the browser refused audio: keep playing muted, the button can turn it on
       onAspect: (ratio) => {
         if (!artwork.aspectRatio) ar.setPlaneAspect(i, ratio);
       },

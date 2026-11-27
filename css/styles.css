@@ -304,6 +304,7 @@ body.is-camera .ambient { display: none; }
 .btn:disabled { opacity: 0.6; cursor: progress; }
 
 .btn:focus-visible,
+.icon-btn:focus-visible,
 .link-btn:focus-visible,
 .privacy-link:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
 
@@ -420,6 +421,28 @@ body.is-camera .ambient { display: none; }
 @keyframes pulse {
   50% { opacity: 0.3; }
 }
+
+/* Sound on / off, only while a video is playing. */
+.icon-btn {
+  position: absolute;
+  top: calc(16px + var(--safe-top));
+  right: 16px;
+  width: var(--touch);
+  height: var(--touch);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--overlay);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--fg);
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+.icon-btn .icon-off { display: none; }
+.icon-btn.is-muted .icon-on { display: none; }
+.icon-btn.is-muted .icon-off { display: inline-flex; }
 
 .video-status {
   top: 50%;

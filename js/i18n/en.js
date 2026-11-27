@@ -29,6 +29,8 @@ export default {
   // Camera screen
   searching: 'Searching for artwork…',
   centerHelp: 'Move closer to the photo and fit it inside the frame.',
+  mute: 'Mute',
+  unmute: 'Unmute',
 
   // FR-08
 

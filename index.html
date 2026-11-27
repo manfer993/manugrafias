@@ -97,6 +97,12 @@
         <p id="searching" class="pill searching" role="status"><span class="dot"></span><span data-i18n="searching">Searching for artwork…</span></p>
       </div>
 
+      <!-- Shown only while a video is playing. -->
+      <button id="btn-mute" type="button" class="icon-btn" aria-pressed="false" aria-label="Mute" data-i18n-aria-label="mute" hidden>
+        <span class="icon-on" data-icon="volume"></span>
+        <span class="icon-off" data-icon="volumeOff"></span>
+      </button>
+
       <div id="video-status" class="pill video-status" role="status" hidden>
         <div class="spinner small" aria-hidden="true"></div>
         <span id="video-status-text"></span>

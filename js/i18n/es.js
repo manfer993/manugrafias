@@ -29,6 +29,8 @@ export default {
   // Pantalla de cámara
   searching: 'Buscando obra…',
   centerHelp: 'Acércate a la foto y encuádrala dentro del marco.',
+  mute: 'Silenciar',
+  unmute: 'Activar sonido',
 
   // FR-08
 
