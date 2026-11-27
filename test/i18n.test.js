@@ -53,7 +53,7 @@ test('SRS texts are verbatim in English', () => {
   assert.equal(en.tipVolumeTitle, 'Turn up the volume');
   assert.equal(en.tipVolumeBody, 'Disable silent mode.');
   assert.equal(en.tipLightTitle, 'Find good light');
-  assert.equal(en.tipAimTitle, 'Point your camera at the artwork');
+  assert.equal(en.tipAimTitle, 'Fit the whole photo in the frame');
   assert.equal(en.scanHint, 'Still nothing? Get a little closer and look for good light.');
   assert.equal(en.videoUnavailable, 'Video unavailable, please try again');
   assert.equal(en.notFoundTitle, 'Artwork collection not found');
