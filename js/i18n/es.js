@@ -79,6 +79,7 @@ export default {
 
   // ERR-10
   noArtworksTitle: 'Aún no hay obras disponibles',
+  noArtworksBody: 'Sus obras se cargarán pronto. ¡Vuelve más tarde!',
 
   // Error de carga de datos o librerías
   loadFailedTitle: 'Algo salió mal',

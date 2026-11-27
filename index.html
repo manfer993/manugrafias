@@ -76,10 +76,12 @@
     <!-- Section 2.4: error and information screens -->
     <main id="screen-message" class="screen screen-message" hidden>
       <div class="brand-mark small"><img src="icon.svg" alt="" /></div>
-      <p class="logo small">ManuGrafias <span class="text-gradient">AR</span></p>
+      <header class="brand">
+        <p class="logo small">ManuGrafias <span class="text-gradient">AR</span></p>
+        <p id="message-subtitle" class="byline byline-name" hidden></p>
+      </header>
       <div class="card message-card">
         <h1 id="message-title" class="message-title"></h1>
-        <p id="message-subtitle" class="byline" hidden></p>
         <div id="message-body" class="message-body"></div>
         <div id="message-extra"></div>
       </div>

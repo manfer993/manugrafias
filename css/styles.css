@@ -309,11 +309,12 @@ body.is-camera .ambient { display: none; }
 
 /* ---- Photographer links (FR-07): icon only, at most 3 ---- */
 
-.links { display: flex; gap: 12px; }
+.links { display: flex; justify-content: center; gap: 16px; }
 .links:empty { display: none; }
 
 .link-btn {
   flex: 1;
+  max-width: 96px;
   min-height: 52px;
   display: flex;
   align-items: center;

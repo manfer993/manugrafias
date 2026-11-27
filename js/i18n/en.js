@@ -79,6 +79,7 @@ export default {
 
   // ERR-10
   noArtworksTitle: 'No artworks available yet',
+  noArtworksBody: 'Their artworks will be available here soon. Check back later!',
 
   // Data or library loading failure (no blank screens, section 2.4)
   loadFailedTitle: 'Something went wrong',

@@ -155,6 +155,7 @@ async function boot() {
     return showMessage({
       title: TEXT.noArtworksTitle,
       subtitle: photographer.name,
+      body: TEXT.noArtworksBody,
       actions: photographer.links.length ? [linksNav(photographer.links)] : [],
     });
   }
