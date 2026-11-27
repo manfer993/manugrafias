@@ -7,7 +7,8 @@ export default {
   jsRequired: 'JavaScript is required.',
 
   // FR-02
-  tipsTitle: 'For the best experience',
+  intro: 'Watch each photo come to life with video and sound: tap Scan Artwork and point your camera at the print.',
+  tipsTitle: 'Keep these tips in mind before scanning',
   tipVolumeTitle: 'Turn up the volume',
   tipVolumeBody: 'Disable silent mode.',
   tipLightTitle: 'Find good light',
@@ -23,13 +24,13 @@ export default {
   linkBehance: 'Behance (opens in a new tab)',
   linkPortfolio: 'Portfolio (opens in a new tab)',
   photographerLinks: 'Photographer links',
+  connectTitle: 'Connect with me',
 
   // Camera screen
   searching: 'Searching for artwork…',
+  centerHelp: 'Please move your photo closer to the center of the camera.',
 
   // FR-08
-  mute: 'Mute',
-  unmute: 'Unmute',
 
   // FR-09
   scanHint: 'Get closer to the photograph and make sure it is well lit.',

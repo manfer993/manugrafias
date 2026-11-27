@@ -7,7 +7,8 @@ export default {
   jsRequired: 'Se necesita JavaScript.',
 
   // FR-02
-  tipsTitle: 'Para una mejor experiencia',
+  intro: 'Mira cada foto cobrar vida con video y sonido: toca Escanear obra y apunta la cámara a la foto impresa.',
+  tipsTitle: 'Toma en cuenta estos tips antes de escanear',
   tipVolumeTitle: 'Sube el volumen',
   tipVolumeBody: 'Desactiva el modo silencio.',
   tipLightTitle: 'Busca buena luz',
@@ -23,13 +24,13 @@ export default {
   linkBehance: 'Behance (se abre en una pestaña nueva)',
   linkPortfolio: 'Portafolio (se abre en una pestaña nueva)',
   photographerLinks: 'Enlaces del fotógrafo',
+  connectTitle: 'Conecta conmigo',
 
   // Pantalla de cámara
   searching: 'Buscando obra…',
+  centerHelp: 'Por favor, acerca tu foto al centro de la cámara.',
 
   // FR-08
-  mute: 'Silenciar',
-  unmute: 'Activar sonido',
 
   // FR-09
   scanHint: 'Acércate a la fotografía y asegúrate de que esté bien iluminada.',

@@ -183,7 +183,7 @@ function renderWelcome(photographer) {
   $('photographer-name').textContent = photographer.name;
   $('privacy-link').href = `privacy.html?lang=${LANGUAGE}`;
   renderLinks($('welcome-links'), photographer.links);
-  renderLinks($('camera-links'), photographer.links);
+  $('welcome-connect').hidden = photographer.links.length === 0;
   show('screen-welcome');
 }
 
@@ -218,14 +218,6 @@ function enableScan(photographer, ar) {
     indicatorDelayMs: config.videoLoadingIndicatorDelayMs,
   });
 
-  const muteButton = $('btn-mute');
-  const setMuted = (muted) => {
-    controller.setMuted(muted);
-    muteButton.setAttribute('aria-pressed', String(muted));
-    muteButton.setAttribute('aria-label', muted ? TEXT.unmute : TEXT.mute);
-    muteButton.classList.toggle('is-muted', muted);
-  };
-  muteButton.addEventListener('click', () => setMuted(!controller.muted));
 
   for (const artwork of photographer.artworks) {
     const i = artwork.targetIndex;
@@ -235,7 +227,7 @@ function enableScan(photographer, ar) {
       host: $('video-host'),
       onPlaying: () => controller.playing(i),
       onError: () => controller.failed(i),
-      onForcedMute: () => setMuted(true),
+      onForcedMute: () => controller.setMuted(true), // the browser refused audio: keep playing muted
       onAspect: (ratio) => {
         if (!artwork.aspectRatio) ar.setPlaneAspect(i, ratio);
       },

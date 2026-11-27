@@ -1,6 +1,6 @@
 # ManuGrafias AR - Architecture (MVP 1)
 
-Source of requirements: `SRS_manugrafias.md` v1.5.
+Source of requirements: `SRS_manugrafias.md` v1.6.
 
 ## Release plan
 

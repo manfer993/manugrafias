@@ -36,10 +36,11 @@
         <div class="brand-mark"><img src="icon.svg" alt="" /></div>
         <h1 class="logo">ManuGrafias <span class="text-gradient">AR</span></h1>
         <p class="byline"><span id="photographer-name" class="byline-name"></span></p>
+        <p class="intro" data-i18n="intro">Watch each photo come to life with video and sound: tap Scan Artwork and point your camera at the print.</p>
       </header>
 
       <section class="tips" aria-labelledby="tips-title">
-        <h2 id="tips-title" class="eyebrow" data-i18n="tipsTitle">For the best experience</h2>
+        <h2 id="tips-title" class="eyebrow" data-i18n="tipsTitle">Keep these tips in mind before scanning</h2>
         <ul class="tip-list">
           <li class="card tip">
             <span class="tip-icon tone-cyan" data-icon="volume"></span>
@@ -60,8 +61,12 @@
         <button id="btn-scan" type="button" class="btn btn-primary" disabled aria-busy="true">
           <span data-icon="scan"></span><span id="btn-scan-label" data-i18n="loading">Loading…</span>
         </button>
-        <nav id="welcome-links" class="links" aria-label="Photographer links" data-i18n-aria-label="photographerLinks"></nav>
       </div>
+
+      <section id="welcome-connect" class="connect" aria-labelledby="connect-title" hidden>
+        <h2 id="connect-title" class="connect-title" data-i18n="connectTitle">Connect with me</h2>
+        <nav id="welcome-links" class="links" aria-label="Photographer links" data-i18n-aria-label="photographerLinks"></nav>
+      </section>
 
       <footer class="footer">
         <a id="privacy-link" class="privacy-link" href="privacy.html" target="_blank" rel="noopener" data-i18n="privacyPolicy">Privacy Policy</a>
@@ -83,14 +88,12 @@
 
     <!-- 4.1 step 5: camera screen -->
     <div id="camera-ui" hidden>
-      <div id="viewfinder" class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-
-      <p id="searching" class="pill searching" role="status"><span class="dot"></span><span data-i18n="searching">Searching for artwork…</span></p>
-
-      <button id="btn-mute" type="button" class="icon-btn" aria-pressed="false" aria-label="Mute" data-i18n-aria-label="mute">
-        <span class="icon-on" data-icon="volume"></span>
-        <span class="icon-off" data-icon="volumeOff"></span>
-      </button>
+      <!-- Shown only while no photograph is tracked: animated corners, centering help and "Searching for artwork…". -->
+      <div id="viewfinder" class="viewfinder">
+        <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+        <p class="center-help" data-i18n="centerHelp">Please move your photo closer to the center of the camera.</p>
+        <p id="searching" class="pill searching" role="status"><span class="dot"></span><span data-i18n="searching">Searching for artwork…</span></p>
+      </div>
 
       <p id="scan-hint" class="pill hint" role="status" data-i18n="scanHint" hidden></p>
 
@@ -98,8 +101,6 @@
         <div class="spinner small" aria-hidden="true"></div>
         <span id="video-status-text"></span>
       </div>
-
-      <nav id="camera-links" class="links camera-links" aria-label="Photographer links" data-i18n-aria-label="photographerLinks"></nav>
     </div>
 
     <noscript>

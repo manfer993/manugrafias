@@ -161,6 +161,15 @@ body.is-camera .ambient { display: none; }
 }
 .byline-name { color: var(--fg); font-weight: 600; letter-spacing: 0.02em; }
 
+/* Intro to the experience (what and how), at most three lines on a phone. */
+.intro {
+  margin: 10px auto 0;
+  max-width: 40ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text, #cbd5e1);
+}
+
 /* ---- Glass cards ---- */
 
 .card {
@@ -204,6 +213,16 @@ body.is-camera .ambient { display: none; }
 .tone-cyan { color: var(--cyan); background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.25); }
 .tone-purple { color: var(--purple); background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.25); }
 .tone-blue { color: var(--blue); background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.25); }
+
+.connect { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 12px; }
+.connect-title {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
 .footer { padding-bottom: 4px; }
 
@@ -285,7 +304,6 @@ body.is-camera .ambient { display: none; }
 .btn:disabled { opacity: 0.6; cursor: progress; }
 
 .btn:focus-visible,
-.icon-btn:focus-visible,
 .link-btn:focus-visible,
 .privacy-link:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
 
@@ -325,7 +343,7 @@ body.is-camera .ambient { display: none; }
 
 .viewfinder {
   position: absolute;
-  inset: calc(72px + var(--safe-top)) 32px calc(104px + var(--safe-bottom));
+  inset: calc(48px + var(--safe-top)) 32px calc(48px + var(--safe-bottom));
   border: 2px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
   pointer-events: none !important;
@@ -337,10 +355,32 @@ body.is-camera .ambient { display: none; }
   height: 40px;
   border: 0 solid var(--cyan);
 }
-.viewfinder i:nth-child(1) { top: -4px; left: -4px; border-width: 4px 0 0 4px; border-top-left-radius: 12px; }
-.viewfinder i:nth-child(2) { top: -4px; right: -4px; border-width: 4px 4px 0 0; border-top-right-radius: 12px; }
-.viewfinder i:nth-child(3) { bottom: -4px; left: -4px; border-width: 0 0 4px 4px; border-bottom-left-radius: 12px; }
-.viewfinder i:nth-child(4) { bottom: -4px; right: -4px; border-width: 0 4px 4px 0; border-bottom-right-radius: 12px; }
+.viewfinder i:nth-child(1) { top: -4px; left: -4px; border-width: 4px 0 0 4px; border-top-left-radius: 12px; --dx: 10px; --dy: 10px; }
+.viewfinder i:nth-child(2) { top: -4px; right: -4px; border-width: 4px 4px 0 0; border-top-right-radius: 12px; --dx: -10px; --dy: 10px; }
+.viewfinder i:nth-child(3) { bottom: -4px; left: -4px; border-width: 0 0 4px 4px; border-bottom-left-radius: 12px; --dx: 10px; --dy: -10px; }
+.viewfinder i:nth-child(4) { bottom: -4px; right: -4px; border-width: 0 4px 4px 0; border-bottom-right-radius: 12px; --dx: -10px; --dy: -10px; }
+
+/* "Searching": the corners close in and glow, then open again. */
+.viewfinder i { animation: vf-search 1.6s ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.6)); }
+@keyframes vf-search {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  50% { transform: translate(var(--dx), var(--dy)); opacity: 0.55; }
+}
+
+.center-help {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(260px, calc(100% - 48px));
+  margin: 0;
+  color: var(--fg);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 18px rgba(0, 0, 0, 0.6);
+}
 #camera-ui.is-tracking .viewfinder,
 #camera-ui.is-tracking .searching { opacity: 0; visibility: hidden; }
 
@@ -365,12 +405,13 @@ body.is-camera .ambient { display: none; }
   pointer-events: none !important;
 }
 
+/* Inside the viewfinder, near its bottom edge. */
 .searching {
-  top: calc(20px + var(--safe-top));
+  bottom: 20px;
   display: flex;
   align-items: center;
   gap: 8px;
-  max-width: calc(100% - 152px);
+  max-width: calc(100% - 32px);
   transition: opacity 0.3s ease;
 }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; flex-shrink: 0; animation: pulse 1.4s ease-in-out infinite; }
@@ -379,7 +420,7 @@ body.is-camera .ambient { display: none; }
   50% { opacity: 0.3; }
 }
 
-.hint { top: calc(84px + var(--safe-top)); border-radius: 16px; }
+.hint { top: calc(64px + var(--safe-top)); border-radius: 16px; }
 
 .video-status {
   top: 50%;
@@ -389,42 +430,6 @@ body.is-camera .ambient { display: none; }
   gap: 10px;
 }
 .video-status[data-state='unavailable'] .spinner { display: none; }
-
-.icon-btn {
-  position: absolute;
-  top: calc(16px + var(--safe-top));
-  right: 16px;
-  width: var(--touch);
-  height: var(--touch);
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: var(--overlay);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  color: var(--fg);
-  display: grid;
-  place-items: center;
-  font-size: 1.25rem;
-  cursor: pointer;
-}
-.icon-btn .icon-off { display: none; }
-.icon-btn.is-muted .icon-on { display: none; }
-.icon-btn.is-muted .icon-off { display: inline-flex; }
-
-.camera-links {
-  position: absolute;
-  left: 50%;
-  bottom: calc(24px + var(--safe-bottom));
-  transform: translateX(-50%);
-  padding: 6px;
-  gap: 6px;
-  border-radius: 18px;
-  background: var(--overlay);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-.camera-links .link-btn { flex: none; width: 64px; min-height: 48px; background: transparent; border-color: transparent; }
 
 /* ---- Spinner ---- */
 
@@ -446,6 +451,7 @@ body.is-camera .ambient { display: none; }
   .spinner { animation-duration: 2.5s; }
   .ambient i,
   .brand-mark::before,
+  .viewfinder i,
   .dot { animation: none; }
 }
 
@@ -454,5 +460,5 @@ body.is-camera .ambient { display: none; }
   .screen { justify-content: flex-start; gap: 10px; }
   .brand-mark { width: 56px; height: 56px; font-size: 1.5rem; margin-bottom: 4px; }
   .logo { font-size: 1.75rem; }
-  .viewfinder { inset: calc(64px + var(--safe-top)) 96px calc(88px + var(--safe-bottom)); }
+  .viewfinder { inset: calc(24px + var(--safe-top)) 96px calc(24px + var(--safe-bottom)); }
 }
