@@ -421,8 +421,6 @@ body.is-camera .ambient { display: none; }
   50% { opacity: 0.3; }
 }
 
-.hint { top: calc(64px + var(--safe-top)); border-radius: 16px; }
-
 .video-status {
   top: 50%;
   transform: translate(-50%, -50%);

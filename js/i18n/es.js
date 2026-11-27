@@ -28,12 +28,12 @@ export default {
 
   // Pantalla de cámara
   searching: 'Buscando obra…',
-  centerHelp: 'Por favor, acerca tu foto al centro de la cámara.',
+  centerHelp: 'Acércate a la foto y encuádrala dentro del marco.',
 
   // FR-08
 
   // FR-09
-  scanHint: 'Acércate a la fotografía y asegúrate de que esté bien iluminada.',
+  scanHint: '¿Aún nada? Acércate un poco más y busca buena luz.',
 
   // ERR-06 / NFR-03
   videoUnavailable: 'Video no disponible, inténtalo de nuevo',

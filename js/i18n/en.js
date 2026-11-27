@@ -28,12 +28,12 @@ export default {
 
   // Camera screen
   searching: 'Searching for artwork…',
-  centerHelp: 'Please move your photo closer to the center of the camera.',
+  centerHelp: 'Move closer to the photo and fit it inside the frame.',
 
   // FR-08
 
   // FR-09
-  scanHint: 'Get closer to the photograph and make sure it is well lit.',
+  scanHint: 'Still nothing? Get a little closer and look for good light.',
 
   // ERR-06 / NFR-03
   videoUnavailable: 'Video unavailable, please try again',

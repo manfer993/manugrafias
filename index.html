@@ -93,11 +93,9 @@
       <!-- Shown only while no photograph is tracked: animated corners, centering help and "Searching for artwork…". -->
       <div id="viewfinder" class="viewfinder">
         <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
-        <p class="center-help" data-i18n="centerHelp">Please move your photo closer to the center of the camera.</p>
+        <p id="center-help" class="center-help" role="status" data-i18n="centerHelp">Move closer to the photo and fit it inside the frame.</p>
         <p id="searching" class="pill searching" role="status"><span class="dot"></span><span data-i18n="searching">Searching for artwork…</span></p>
       </div>
-
-      <p id="scan-hint" class="pill hint" role="status" data-i18n="scanHint" hidden></p>
 
       <div id="video-status" class="pill video-status" role="status" hidden>
         <div class="spinner small" aria-hidden="true"></div>

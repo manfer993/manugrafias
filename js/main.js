@@ -197,9 +197,11 @@ function enableScan(photographer, ar) {
   const scanLabel = $('btn-scan-label');
   scanLabel.textContent = TEXT.scanArtwork;
 
+  // One help text in the middle of the frame; after a while without a photograph it changes to the FR-09 hint.
+  const centerHelp = $('center-help');
   const ui = {
-    showHint: () => ($('scan-hint').hidden = false),
-    hideHint: () => ($('scan-hint').hidden = true),
+    showHint: () => (centerHelp.textContent = TEXT.scanHint),
+    hideHint: () => (centerHelp.textContent = TEXT.centerHelp),
     showLoading: () => setStatus('loading'),
     showUnavailable: () => setStatus('unavailable'),
     hideStatus: () => setStatus(null),
