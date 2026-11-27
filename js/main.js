@@ -247,6 +247,8 @@ function enableScan(photographer, ar) {
       },
     });
     ar.anchors.get(i).addEventListener('targetFound', () => {
+      // Short vibration when a new artwork is recognized (Android; iOS has no Vibration API).
+      if (controller.active !== i) navigator.vibrate?.(60);
       tracked.add(i);
       updateTracking();
       controller.found(i);
